@@ -1,0 +1,71 @@
+{
+  "name": "react-todo-app",
+  "version": "1.0.0",
+  "description": "Awesome React ToDo App. Enjoy!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ritvarsbiksis/react-todo-app.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "8.9.1",
+    "npm": "5.5.1"
+  },
+  "scripts": {
+    "start": "webpack --config webpack.prod.js",
+    "dev:ui": "webpack --config webpack.dev.js -d --watch",
+    "dev:app": "node index.js",
+    "dev": "concurrently \"npm run dev:app\" \"npm run dev:ui\""
+  },
+  "author": "Ritvars",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.7",
+    "express": "^4.16.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "html-webpack-plugin": "^2.30.1",
+    "image-webpack-loader": "^3.4.2",
+    "lodash": "^4.17.4",
+    "material-design-icons": "^3.0.1",
+    "material-ui": "^1.0.0-beta.23",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "node-sass": "^4.6.0",
+    "node-sass-chokidar": "^0.0.3",
+    "react": "^16.2.0",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.2",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
+    "sass-loader": "^6.0.6",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.19.0",
+    "typeface-roboto": "^0.0.45",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.4",
+    "webpack-merge": "^4.1.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "useTabs": false,
+    "semi": false,
+    "jsxBracketSameLine": true,
+    "spaceBeforeFunctionParen": true
+  }
+}
