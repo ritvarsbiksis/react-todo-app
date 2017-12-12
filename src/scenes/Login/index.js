@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 import { TextField, Button } from 'material-ui'
+import _ from 'lodash'
+import { Redirect, Switch } from 'react-router-dom'
 
 import styles from './styles'
 import { setUser } from '../../actions'
@@ -13,32 +15,36 @@ class Login extends Component {
     super(props)
 
     this.state = {
-      email: '',
+      username: '',
       password: ''
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
-  componentDidMount () {
-    this.props.setUser({ username: 'admin', pass: 'passs888' })
-  }
-
   render () {
-    const { classes } = this.props
-    const { email, password } = this.state
+    const { classes, user } = this.props
+    const { username, password } = this.state
+
+    if (!_.isEmpty(user)) {
+      return (
+        <Switch>
+          <Redirect from={'/login'} to={'/'} />
+        </Switch>
+      )
+    }
 
     return (
       <div>
         <PageTitle title={'Login'} />
         <form noValidate autoComplete={'off'}>
           <TextField
-            id={'email'}
-            label={'Email'}
+            id={'username'}
+            label={'Username'}
             className={classes.textField}
             margin={'normal'}
-            value={email}
-            onChange={(e) => this.setState({ email: e.target.value })}
+            value={username}
+            onChange={(e) => this.setState({ username: e.target.value })}
           />
           <TextField
             id={'password'}
@@ -59,21 +65,21 @@ class Login extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
-    const { user } = this.props
+    const { setUser } = this.props
+    const { username, password } = this.state
 
-    console.log('Form submited')
-    console.log('User data from redux store : ', user)
+    setUser({ username, password })
   }
+}
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.common.user
   }
-}
-
-Login.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, { setUser })(withStyles(styles)(Login))
