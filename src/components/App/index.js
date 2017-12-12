@@ -20,7 +20,7 @@ class App extends Component {
           <div>
             <Header />
             <div className={classes.container}>
-              <AuthorizedRoute user path={'/'} exact component={ToDoList} />
+              <AuthorizedRoute path={'/'} component={ToDoList} />
               <Route path={'/login'} component={Login} />
             </div>
           </div>

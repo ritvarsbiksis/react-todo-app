@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const config = {
-  entry: './src/index.js',
+  entry: [ 'babel-polyfill', './src/index.js' ],
   output: {
     path: path.resolve(path.join(__dirname, 'public/'), 'build'),
     filename: 'bundle.js'

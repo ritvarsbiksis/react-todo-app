@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { AppBar, Toolbar, Typography, Button } from 'material-ui'
+import { AppBar, Toolbar, Typography } from 'material-ui'
 
 import styles from './styles'
+import AuthorizedComponent from '../AuthorizedComponent/index'
+import Logout from './components/Logout'
 
 class Header extends Component {
   render () {
@@ -20,19 +21,9 @@ class Header extends Component {
               className={`${classes.flex} ${classes.title}`}>
               React ToDo App
             </Typography>
-            {this.renderButtons()}
+            <AuthorizedComponent path={'/'} component={Logout} />
           </Toolbar>
         </AppBar>
-      </div>
-    )
-  }
-
-  renderButtons () {
-    return (
-      <div>
-        <Link to={'/login'}>
-          <Button color={'contrast'}>Login</Button>
-        </Link>
       </div>
     )
   }
