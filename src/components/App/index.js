@@ -7,8 +7,7 @@ import './style.scss'
 import styles from './styles'
 import Header from '../Header'
 import Login from '../../scenes/Login'
-
-const ToDos = () => <div>ToDos</div>
+import ToDoList from '../../scenes/ToDoList'
 
 class App extends Component {
   render () {
@@ -20,7 +19,7 @@ class App extends Component {
           <div>
             <Header />
             <div className={classes.container}>
-              <Route path={'/'} exact component={ToDos} />
+              <Route path={'/'} exact component={ToDoList} />
               <Route path={'/login'} component={Login} />
             </div>
           </div>

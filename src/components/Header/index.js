@@ -28,14 +28,10 @@ class Header extends Component {
   }
 
   renderButtons () {
-    const { classes } = this.props
-
     return (
       <div>
         <Link to={'/login'}>
-          <Button className={classes.button} color={'contrast'}>
-            Login
-          </Button>
+          <Button color={'contrast'}>Login</Button>
         </Link>
       </div>
     )

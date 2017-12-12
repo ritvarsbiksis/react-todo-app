@@ -8,8 +8,5 @@ export default (theme) => ({
   },
   flex: {
     flex: 1
-  },
-  button: {
-    margin: theme.spacing.unit
   }
 })

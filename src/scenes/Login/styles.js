@@ -1,11 +1,9 @@
 export default (theme) => ({
   textField: {
     display: 'flex',
-    marginRight: theme.spacing.unit,
-    width: 300
+    marginRight: theme.spacing.unit
   },
   button: {
-    marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit * 2
   }
 })
