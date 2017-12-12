@@ -2,13 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
-import { TextField, Button } from 'material-ui'
+import { Button } from 'material-ui'
 import _ from 'lodash'
 import { Redirect, Switch } from 'react-router-dom'
+import { reduxForm, formValueSelector } from 'redux-form'
 
 import styles from './styles'
+import validate from './utils/validateForm'
 import { setUser } from '../../actions'
 import PageTitle from '../../components/PageTtitle'
+import ReduxField from '../../components/ReduxField'
+
+const form = 'formLogin'
 
 class Login extends Component {
   constructor (props) {
@@ -23,7 +28,7 @@ class Login extends Component {
   }
 
   render () {
-    const { classes, user } = this.props
+    const { classes, user, handleSubmit } = this.props
     const { username, password } = this.state
 
     if (!_.isEmpty(user)) {
@@ -37,17 +42,17 @@ class Login extends Component {
     return (
       <div>
         <PageTitle title={'Login'} />
-        <form noValidate autoComplete={'off'}>
-          <TextField
-            id={'username'}
+        <form noValidate autoComplete={'off'} onSubmit={handleSubmit(this.onFormSubmit)}>
+          <ReduxField
+            name={'username'}
             label={'Username'}
             className={classes.textField}
             margin={'normal'}
             value={username}
             onChange={(e) => this.setState({ username: e.target.value })}
           />
-          <TextField
-            id={'password'}
+          <ReduxField
+            name={'password'}
             label={'Password'}
             className={classes.textField}
             type={'password'}
@@ -55,7 +60,11 @@ class Login extends Component {
             value={password}
             onChange={(e) => this.setState({ password: e.target.value })}
           />
-          <Button type={'submit'} raised className={classes.button} onClick={this.onFormSubmit}>
+          <Button
+            type={'submit'}
+            raised
+            className={classes.button}
+            onClick={handleSubmit(this.onFormSubmit)}>
             Login
           </Button>
         </form>
@@ -64,7 +73,6 @@ class Login extends Component {
   }
 
   onFormSubmit (event) {
-    event.preventDefault()
     const { setUser } = this.props
     const { username, password } = this.state
 
@@ -78,8 +86,11 @@ Login.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.common.user
+    user: state.common.user,
+    formValues: formValueSelector(form)(state, 'username', 'password')
   }
 }
 
-export default connect(mapStateToProps, { setUser })(withStyles(styles)(Login))
+export default connect(mapStateToProps, { setUser })(
+  reduxForm({ form, validate })(withStyles(styles)(Login))
+)
