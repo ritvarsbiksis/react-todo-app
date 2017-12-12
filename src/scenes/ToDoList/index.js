@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { withStyles } from 'material-ui/styles'
@@ -11,8 +12,15 @@ import PageTitle from '../../components/PageTtitle'
 import FormAddNew from './components/FormAddNew'
 import ItemToDo from './components/ItemToDo'
 import { toDosData } from './utils/dummyData'
+import { todoFetch } from './actions/index'
 
 class ToDoList extends Component {
+  componentDidMount () {
+    const { todoFetch, user: { id }, todosList } = this.props
+
+    if (_.isEmpty(todosList)) todoFetch(id)
+  }
+
   render () {
     const { classes } = this.props
     const AddNewBtn = () => (
@@ -47,4 +55,11 @@ ToDoList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(ToDoList)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.common.user,
+    todosList: state.todos.todosList
+  }
+}
+
+export default connect(mapStateToProps, { todoFetch })(withStyles(styles)(ToDoList))

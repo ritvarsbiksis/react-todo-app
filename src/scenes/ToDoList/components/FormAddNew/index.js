@@ -11,6 +11,7 @@ import { reduxForm, formValueSelector } from 'redux-form'
 import styles from './styles'
 import validate from './utils/validateForm'
 import ReduxField from '../../../../components/ReduxField'
+import { todoCreate } from '../../actions'
 
 const form = 'formFormAddNew'
 
@@ -76,9 +77,9 @@ class FormAddNew extends Component {
   }
 
   onFormSubmit (event) {
-    const { formValues } = this.props
+    const { formValues, todoCreate, user: { id } } = this.props
 
-    console.log('formValues :: ', formValues)
+    todoCreate({ ...formValues, userId: id })
   }
 }
 
@@ -88,6 +89,7 @@ FormAddNew.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    user: state.common.user,
     formValues: formValueSelector(form)(state, 'title', 'content', 'category'),
     initialValues: {
       category: 'urgent',
@@ -96,6 +98,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { todoCreate })(
   reduxForm({ form, validate })(withStyles(styles)(FormAddNew))
 )
