@@ -1,9 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 
-ReactDOM.render(<App />, document.querySelector('#root'))
+const theme = createMuiTheme()
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <App />
+  </MuiThemeProvider>,
+  document.querySelector('#root')
+)
 
 registerServiceWorker()

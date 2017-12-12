@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&subset=cyrillic-ext,latin-ext');
+
+html {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+#root,
+.app-container {
+  height: 100%;
+}
+
+:link {
+  text-decoration: none;
+}
+
+:visited {
+  text-decoration: none;
+}
