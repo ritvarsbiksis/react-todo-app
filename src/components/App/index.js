@@ -6,8 +6,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import './style.scss'
 import styles from './styles'
 import Header from '../Header'
+import Login from '../../scenes/Login'
 
-const Login = () => <div>Login</div>
 const ToDos = () => <div>ToDos</div>
 
 class App extends Component {
