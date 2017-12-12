@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 import { TextField, Button } from 'material-ui'
 
 import styles from './styles'
+import { setUser } from '../../actions'
 import PageTitle from '../../components/PageTtitle'
 
 class Login extends Component {
@@ -16,6 +18,10 @@ class Login extends Component {
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.setUser({ username: 'admin', pass: 'passs888' })
   }
 
   render () {
@@ -53,8 +59,16 @@ class Login extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
+    const { user } = this.props
 
     console.log('Form submited')
+    console.log('User data from redux store : ', user)
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.common.user
   }
 }
 
@@ -62,4 +76,4 @@ Login.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Login)
+export default connect(mapStateToProps, { setUser })(withStyles(styles)(Login))
