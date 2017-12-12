@@ -8,6 +8,7 @@ import styles from './styles'
 import Header from '../Header'
 import Login from '../../scenes/Login'
 import ToDoList from '../../scenes/ToDoList'
+import AuthorizedRoute from '../AuthorizedRoute'
 
 class App extends Component {
   render () {
@@ -19,7 +20,7 @@ class App extends Component {
           <div>
             <Header />
             <div className={classes.container}>
-              <Route path={'/'} exact component={ToDoList} />
+              <AuthorizedRoute user path={'/'} exact component={ToDoList} />
               <Route path={'/login'} component={Login} />
             </div>
           </div>
