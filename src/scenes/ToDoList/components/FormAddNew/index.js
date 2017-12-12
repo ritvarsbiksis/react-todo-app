@@ -1,48 +1,43 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
-import { Button, TextField } from 'material-ui'
+import { Button } from 'material-ui'
 import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
 import { Link } from 'react-router-dom'
+import { reduxForm, formValueSelector } from 'redux-form'
 
 import styles from './styles'
+import validate from './utils/validateForm'
+import ReduxField from '../../../../components/ReduxField'
+
+const form = 'formFormAddNew'
 
 class FormAddNew extends Component {
   constructor (props) {
     super(props)
-
-    this.state = {
-      title: '',
-      content: '',
-      category: 'normal'
-    }
-
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
+
   render () {
-    const { classes } = this.props
-    const { title, content, category } = this.state
+    const { classes, formValues: { category }, change, handleSubmit } = this.props
 
     return (
-      <form noValidate autoComplete={'off'}>
-        <TextField
+      <form noValidate autoComplete={'off'} onSubmit={handleSubmit(this.onFormSubmit)}>
+        <ReduxField
+          name={'title'}
+          label={'Title'}
           className={classes.textField}
           margin={'normal'}
-          label={'Title'}
           placeholder={'ToDo title'}
-          id={'title'}
-          value={title}
-          onChange={(e) => this.setState({ title: e.target.value })}
         />
-        <TextField
+        <ReduxField
           className={classes.textField}
           margin={'normal'}
           label={'Content'}
           placeholder={'Write some lines\n...on ToDo'}
-          id={'content'}
-          value={content}
-          onChange={(e) => this.setState({ content: e.target.value })}
+          name={'content'}
           multiline
           rows={2}
           rowsMax={20}
@@ -56,7 +51,7 @@ class FormAddNew extends Component {
             name={'category'}
             className={classes.group}
             value={category}
-            onChange={(e) => this.setState({ category: e.target.value })}>
+            onChange={(e, value) => change('category', value)}>
             <FormControlLabel value={'normal'} control={<Radio />} label={'Normal'} />
             <FormControlLabel value={'urgent'} control={<Radio />} label={'Urgent'} />
             <FormControlLabel value={'important'} control={<Radio />} label={'Important'} />
@@ -69,7 +64,7 @@ class FormAddNew extends Component {
             color={'accent'}
             raised
             className={classes.button}
-            onClick={this.onFormSubmit}>
+            onClick={handleSubmit(this.onFormSubmit)}>
             Submit
           </Button>
           <Link to={'/'} className={classes.button}>
@@ -81,9 +76,9 @@ class FormAddNew extends Component {
   }
 
   onFormSubmit (event) {
-    event.preventDefault()
+    const { formValues } = this.props
 
-    console.log('Form submited')
+    console.log('formValues :: ', formValues)
   }
 }
 
@@ -91,4 +86,16 @@ FormAddNew.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(FormAddNew)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    formValues: formValueSelector(form)(state, 'title', 'content', 'category'),
+    initialValues: {
+      category: 'urgent',
+      content: ''
+    }
+  }
+}
+
+export default connect(mapStateToProps)(
+  reduxForm({ form, validate })(withStyles(styles)(FormAddNew))
+)
