@@ -3,41 +3,47 @@
 import _ from 'lodash'
 import stringify from 'json-stable-stringify'
 
-import { TODO_CREATE, TODO_FETCH_LIST } from '../actions/types'
+import { TODO_CREATE, TODO_FETCH_LIST, TODO_CLEAR_LIST } from '../actions/types'
 
 const INITIAL_STATE = {
-  todosList: [],
   todosById: {}
 }
 
 export default (state = INITIAL_STATE, { type, payload }) => {
-  let newTodosList
+  let newTodosById
 
   switch (type) {
     case TODO_CREATE:
-      let newId = 1
+      let newId
 
-      if (!_.isEmpty(state.todosList)) {
-        newId = _.chain(state.todosList).orderBy('id', 'desc').value()[0].id + 1
-      } else {
-        state.todosList = localStorage.getItem(payload.userId) || []
+      if (_.isEmpty(state.todosById)) state.todosById = localStorage.getItem(payload.userId) || {}
+
+      newId = !_.isEmpty(state.todosById)
+        ? _.chain(state.todosById).orderBy('id', 'desc').value()[0].id + 1
+        : 1
+
+      newTodosById = {
+        ...state.todosById,
+        [newId]: { ...payload, id: newId, done: false }
       }
 
-      newTodosList = _.concat({ ...payload, id: newId, done: false }, state.todosList)
-      localStorage.setItem(payload.userId, stringify(newTodosList))
+      localStorage.setItem(payload.userId, stringify(newTodosById))
 
       return {
         ...state,
-        todosList: newTodosList,
-        todosById: _.keyBy(newTodosList, 'id')
+        todosById: newTodosById
       }
     case TODO_FETCH_LIST:
-      newTodosList = JSON.parse(localStorage.getItem(payload)) || []
+      newTodosById = JSON.parse(localStorage.getItem(payload)) || {}
 
       return {
         ...state,
-        todosList: newTodosList,
-        todosById: !_.isEmpty(newTodosList) ? _.keyBy(newTodosList, 'id') : {}
+        todosById: newTodosById
+      }
+    case TODO_CLEAR_LIST:
+      return {
+        ...state,
+        todosById: {}
       }
     default:
       return state

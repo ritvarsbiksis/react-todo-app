@@ -7,11 +7,13 @@ import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
 import { Link } from 'react-router-dom'
 import { reduxForm, formValueSelector } from 'redux-form'
+import _ from 'lodash'
 
 import styles from './styles'
 import validate from './utils/validateForm'
 import ReduxField from '../../../../components/ReduxField'
 import { todoCreate } from '../../actions'
+import { radioData } from './utils/formData'
 
 const form = 'formFormAddNew'
 
@@ -53,10 +55,9 @@ class FormAddNew extends Component {
             className={classes.group}
             value={category}
             onChange={(e, value) => change('category', value)}>
-            <FormControlLabel value={'normal'} control={<Radio />} label={'Normal'} />
-            <FormControlLabel value={'urgent'} control={<Radio />} label={'Urgent'} />
-            <FormControlLabel value={'important'} control={<Radio />} label={'Important'} />
-            <FormControlLabel value={'optional'} control={<Radio />} label={'Optional'} />
+            {_.map(radioData, ({ label, value }) => (
+              <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
+            ))}
           </RadioGroup>
         </FormControl>
         <div className={classes.btnContainer}>
@@ -77,9 +78,10 @@ class FormAddNew extends Component {
   }
 
   onFormSubmit (event) {
-    const { formValues, todoCreate, user: { id } } = this.props
+    const { formValues, todoCreate, user: { id }, reset } = this.props
 
     todoCreate({ ...formValues, userId: id })
+    reset()
   }
 }
 
@@ -92,7 +94,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.common.user,
     formValues: formValueSelector(form)(state, 'title', 'content', 'category'),
     initialValues: {
-      category: 'urgent',
+      category: 'normal',
       content: ''
     }
   }
