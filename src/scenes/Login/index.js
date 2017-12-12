@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 import { Button } from 'material-ui'
 import _ from 'lodash'
-import { Redirect, Switch } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { reduxForm, formValueSelector } from 'redux-form'
 
 import styles from './styles'
@@ -18,25 +18,14 @@ const form = 'formLogin'
 class Login extends Component {
   constructor (props) {
     super(props)
-
-    this.state = {
-      username: '',
-      password: ''
-    }
-
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
   render () {
     const { classes, user, handleSubmit } = this.props
-    const { username, password } = this.state
 
     if (!_.isEmpty(user)) {
-      return (
-        <Switch>
-          <Redirect from={'/login'} to={'/'} />
-        </Switch>
-      )
+      return <Redirect from={'/login'} to={'/'} />
     }
 
     return (
@@ -48,8 +37,6 @@ class Login extends Component {
             label={'Username'}
             className={classes.textField}
             margin={'normal'}
-            value={username}
-            onChange={(e) => this.setState({ username: e.target.value })}
           />
           <ReduxField
             name={'password'}
@@ -57,8 +44,6 @@ class Login extends Component {
             className={classes.textField}
             type={'password'}
             margin={'normal'}
-            value={password}
-            onChange={(e) => this.setState({ password: e.target.value })}
           />
           <Button
             type={'submit'}
@@ -73,8 +58,7 @@ class Login extends Component {
   }
 
   onFormSubmit (event) {
-    const { setUser } = this.props
-    const { username, password } = this.state
+    const { setUser, formValues: { username, password } } = this.props
 
     setUser({ username, password })
   }
