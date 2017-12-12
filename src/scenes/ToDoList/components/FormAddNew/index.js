@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import { Button, TextField } from 'material-ui'
 import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
+import { Link } from 'react-router-dom'
 
 import styles from './styles'
 
@@ -38,7 +39,7 @@ class FormAddNew extends Component {
           className={classes.textField}
           margin={'normal'}
           label={'Content'}
-          placeholder={'Write some lines\n...on to do!'}
+          placeholder={'Write some lines\n...on ToDo'}
           id={'content'}
           value={content}
           onChange={(e) => this.setState({ content: e.target.value })}
@@ -71,9 +72,9 @@ class FormAddNew extends Component {
             onClick={this.onFormSubmit}>
             Submit
           </Button>
-          <Button raised className={classes.button} onClick={this.onFormSubmit}>
-            Cancel
-          </Button>
+          <Link to={'/'} className={classes.button}>
+            <Button raised>Cancel</Button>
+          </Link>
         </div>
       </form>
     )

@@ -1,7 +1,8 @@
 export default (theme) => ({
   root: {
     width: '100%',
-    background: theme.palette.background.paper
+    background: theme.palette.background.paper,
+    marginTop: theme.spacing.unit * 3
   },
   textField: {
     display: 'flex'
@@ -12,8 +13,10 @@ export default (theme) => ({
     flexDirection: 'row',
     margin: `${theme.spacing.unit}px 0`
   },
-  button: {
-    marginRight: theme.spacing.unit * 2
+  addButton: {
+    position: 'absolute',
+    top: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3
   },
   btnContainer: {
     display: 'flex',
