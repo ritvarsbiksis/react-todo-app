@@ -8,7 +8,6 @@ export const todoCreate = (props) => {
 }
 
 export const todosUpdate = (props) => {
-  console.log('TODO_CREATE :: ', props)
   return {
     type: TODO_UPDATE,
     payload: props

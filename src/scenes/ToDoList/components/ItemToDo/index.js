@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Checkbox, Divider } from 'material-ui'
-import { ListItem, ListItemText } from 'material-ui/List'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import { Checkbox, Divider, Typography, IconButton } from 'material-ui'
+import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
 import { todosUpdate } from '../../actions'
+import DeleteIcon from 'material-ui-icons/DeleteForever'
+import ViewIcon from 'material-ui-icons/Visibility'
+
+import styles from './styles'
 
 class ItemToDo extends Component {
   state = {
@@ -16,25 +22,45 @@ class ItemToDo extends Component {
   }
 
   render () {
-    const { toDoInfo: { title, category, id }, todosUpdate, user, ...props } = this.props
+    const { toDoInfo: { title, category, id }, todosUpdate, user, classes, ...props } = this.props
     const { isDone } = this.state
 
     return (
       <div {...props}>
-        <ListItem>
+        <ListItem className={isDone ? classes.rootDone : null}>
           <Checkbox
+            classes={{ checked: classes.todoDone }}
             checked={isDone}
             onChange={() => {
               todosUpdate({ userId: user.id, id, data: { done: !isDone } })
               this.setState({ isDone: !isDone })
             }}
           />
-          <ListItemText primary={title} secondary={category} />
+          <div className={classes.container}>
+            <Typography className={isDone ? classes.todoDone : classes.title} type={'subheading'}>
+              {title}
+            </Typography>
+            <Typography className={classes.category} type={'body1'}>
+              {category}
+            </Typography>
+          </div>
+          <ListItemSecondaryAction>
+            <IconButton aria-label={'Delete'}>
+              <DeleteIcon className={isDone ? classes.listIconDone : null} />
+            </IconButton>
+            <IconButton aria-label={'View'}>
+              <ViewIcon className={isDone ? classes.listIconDone : null} />
+            </IconButton>
+          </ListItemSecondaryAction>
         </ListItem>
         <Divider />
       </div>
     )
   }
+}
+
+ItemToDo.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -43,4 +69,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { todosUpdate })(ItemToDo)
+export default connect(mapStateToProps, { todosUpdate })(withStyles(styles)(ItemToDo))
