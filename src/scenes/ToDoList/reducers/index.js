@@ -12,7 +12,13 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  todosById: {}
+  todosById: {},
+  categoriesData: [
+    { value: 'normal', label: 'Normal' },
+    { value: 'urgent', label: 'Urgent' },
+    { value: 'important', label: 'Important' },
+    { value: 'optional', label: 'Optional' }
+  ]
 }
 
 export default (state = INITIAL_STATE, { type, payload }) => {

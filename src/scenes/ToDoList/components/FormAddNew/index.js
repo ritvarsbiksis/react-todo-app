@@ -12,7 +12,6 @@ import styles from './styles'
 import validate from './utils/validateForm'
 import ReduxField from '../../../../components/ReduxField'
 import { todoCreate } from '../../actions'
-import { radioData } from './utils/formData'
 
 const form = 'formFormAddNew'
 
@@ -23,7 +22,14 @@ class FormAddNew extends Component {
   }
 
   render () {
-    const { classes, formValues: { category }, change, handleSubmit, onClickCancelBtn } = this.props
+    const {
+      classes,
+      formValues: { category },
+      change,
+      handleSubmit,
+      onClickCancelBtn,
+      categoriesData
+    } = this.props
 
     return (
       <form noValidate autoComplete={'off'} onSubmit={handleSubmit(this.onFormSubmit)}>
@@ -54,7 +60,7 @@ class FormAddNew extends Component {
             className={classes.group}
             value={category}
             onChange={(e, value) => change('category', value)}>
-            {_.map(radioData, ({ label, value }) => (
+            {_.map(categoriesData, ({ label, value }) => (
               <FormControlLabel key={value} value={value} control={<Radio />} label={label} />
             ))}
           </RadioGroup>
@@ -91,6 +97,7 @@ FormAddNew.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.common.user,
+    categoriesData: state.todos.categoriesData,
     formValues: formValueSelector(form)(state, 'title', 'content', 'category'),
     initialValues: {
       category: 'normal',
