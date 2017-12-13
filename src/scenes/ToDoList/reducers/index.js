@@ -3,7 +3,13 @@
 import _ from 'lodash'
 import stringify from 'json-stable-stringify'
 
-import { TODO_CREATE, TODO_FETCH_LIST, TODO_CLEAR_LIST, TODO_UPDATE } from '../actions/types'
+import {
+  TODO_CREATE,
+  TODO_FETCH_LIST,
+  TODO_CLEAR_LIST,
+  TODO_UPDATE,
+  TODO_DELETE
+} from '../actions/types'
 
 const INITIAL_STATE = {
   todosById: {}
@@ -41,6 +47,15 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           ...payload.data
         }
       }
+
+      localStorage.setItem(payload.userId, stringify(newTodosById))
+
+      return {
+        ...state,
+        todosById: newTodosById
+      }
+    case TODO_DELETE:
+      newTodosById = _.omit(state.todosById, payload)
 
       localStorage.setItem(payload.userId, stringify(newTodosById))
 

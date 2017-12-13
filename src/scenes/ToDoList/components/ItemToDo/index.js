@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Checkbox, Divider, Typography, IconButton } from 'material-ui'
 import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
-import { todosUpdate } from '../../actions'
 import DeleteIcon from 'material-ui-icons/DeleteForever'
 import ViewIcon from 'material-ui-icons/Visibility'
 
 import styles from './styles'
+import { todosUpdate, todoDelete } from '../../actions'
 
 class ItemToDo extends Component {
   state = {
@@ -22,7 +22,14 @@ class ItemToDo extends Component {
   }
 
   render () {
-    const { toDoInfo: { title, category, id }, todosUpdate, user, classes, ...props } = this.props
+    const {
+      toDoInfo: { title, category, id },
+      todosUpdate,
+      user,
+      classes,
+      todoDelete,
+      ...props
+    } = this.props
     const { isDone } = this.state
 
     return (
@@ -45,7 +52,7 @@ class ItemToDo extends Component {
             </Typography>
           </div>
           <ListItemSecondaryAction>
-            <IconButton aria-label={'Delete'}>
+            <IconButton aria-label={'Delete'} onClick={() => todoDelete(id)}>
               <DeleteIcon className={isDone ? classes.listIconDone : null} />
             </IconButton>
             <IconButton aria-label={'View'}>
@@ -69,4 +76,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { todosUpdate })(withStyles(styles)(ItemToDo))
+export default connect(mapStateToProps, { todosUpdate, todoDelete })(withStyles(styles)(ItemToDo))

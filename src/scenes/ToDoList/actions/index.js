@@ -1,4 +1,4 @@
-import { TODO_CREATE, TODO_UPDATE, TODO_FETCH_LIST, TODO_CLEAR_LIST } from './types'
+import { TODO_CREATE, TODO_UPDATE, TODO_FETCH_LIST, TODO_CLEAR_LIST, TODO_DELETE } from './types'
 
 export const todoCreate = (props) => {
   return {
@@ -11,6 +11,13 @@ export const todosUpdate = (props) => {
   return {
     type: TODO_UPDATE,
     payload: props
+  }
+}
+
+export const todoDelete = (id) => {
+  return {
+    type: TODO_DELETE,
+    payload: id
   }
 }
 
