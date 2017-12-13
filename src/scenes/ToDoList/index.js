@@ -44,7 +44,7 @@ class ToDoList extends Component {
     )
 
     return (
-      <div>
+      <div className={classes.contentWrapper}>
         <PageTitle title={'ToDos'} />
         <HashRouter hashType={'noslash'}>
           <div>

@@ -1,4 +1,7 @@
 export default (theme) => ({
+  contentWrapper: {
+    width: '100%'
+  },
   root: {
     width: '100%',
     background: theme.palette.background.paper,

@@ -23,5 +23,8 @@ export default (theme) => ({
   todoDone: {
     color: gray,
     textDecoration: 'line-through'
+  },
+  checkboxRoot: {
+    marginLeft: '-17px'
   }
 })

@@ -36,6 +36,7 @@ class ItemToDo extends Component {
       <div {...props}>
         <ListItem className={isDone ? classes.rootDone : null}>
           <Checkbox
+            className={classes.checkboxRoot}
             classes={{ checked: classes.todoDone }}
             checked={isDone}
             onChange={() => {
