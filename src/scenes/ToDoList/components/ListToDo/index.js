@@ -20,19 +20,22 @@ class ListToDo extends Component {
     this.state = {
       isToDosData: false,
       showForm: false,
-      showCategories: {}
+      showCategories: {},
+      categoriesByValue: {}
     }
     this.renderToDoList = this.renderToDoList.bind(this)
   }
 
   componentWillMount () {
     const { categoriesData } = this.props
+    const categoriesByValue = _.keyBy(categoriesData, 'value')
     let showCategories = {}
 
     _.map(categoriesData, ({ value }) => {
       showCategories = { ...showCategories, [value]: true }
     })
-    this.setState({ showCategories })
+
+    this.setState({ showCategories, categoriesByValue })
   }
 
   componentDidMount () {
@@ -60,7 +63,7 @@ class ListToDo extends Component {
 
   render () {
     const { classes } = this.props
-    const { isToDosData, showForm, showCategories } = this.state
+    const { isToDosData, showForm } = this.state
 
     const AddNewBtn = () => (
       <Button
@@ -90,7 +93,7 @@ class ListToDo extends Component {
 
   renderToDoList () {
     const { todosById } = this.props
-    const { showCategories } = this.state
+    const { showCategories, categoriesByValue } = this.state
     const sortedTodos = _.chain(todosById)
       .filter(({ category }) => showCategories[category])
       .orderBy('id', 'desc')
@@ -108,7 +111,9 @@ class ListToDo extends Component {
         />
         <List>
           <Divider />
-          {_.map(sortedTodos, (toDoObj) => <ItemToDo key={toDoObj.id} toDoInfo={toDoObj} />)}
+          {_.map(sortedTodos, (toDoObj) => (
+            <ItemToDo categoriesByValue={categoriesByValue} key={toDoObj.id} toDoInfo={toDoObj} />
+          ))}
         </List>
       </div>
     )

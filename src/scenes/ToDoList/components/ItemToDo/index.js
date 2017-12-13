@@ -30,6 +30,7 @@ class ItemToDo extends Component {
       user,
       classes,
       todoDelete,
+      categoriesByValue,
       ...props
     } = this.props
     const { isDone } = this.state
@@ -51,7 +52,7 @@ class ItemToDo extends Component {
               {title}
             </Typography>
             <Typography className={classes.category} type={'body1'}>
-              {category}
+              {categoriesByValue[category].label}
             </Typography>
           </div>
           <ListItemSecondaryAction>
