@@ -6,13 +6,15 @@ import { Checkbox, Divider, Typography, IconButton } from 'material-ui'
 import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
 import DeleteIcon from 'material-ui-icons/DeleteForever'
 import ViewIcon from 'material-ui-icons/Visibility'
+import { Link } from 'react-router-dom'
 
 import styles from './styles'
 import { todosUpdate, todoDelete } from '../../actions'
 
 class ItemToDo extends Component {
   state = {
-    isDone: false
+    isDone: false,
+    redirectToView: false
   }
 
   componentDidMount () {
@@ -56,9 +58,11 @@ class ItemToDo extends Component {
             <IconButton aria-label={'Delete'} onClick={() => todoDelete(id)}>
               <DeleteIcon className={isDone ? classes.listIconDone : null} />
             </IconButton>
-            <IconButton aria-label={'View'}>
-              <ViewIcon className={isDone ? classes.listIconDone : null} />
-            </IconButton>
+            <Link to={'/todo'}>
+              <IconButton aria-label={'View'}>
+                <ViewIcon className={isDone ? classes.listIconDone : null} />
+              </IconButton>
+            </Link>
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />

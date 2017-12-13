@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles'
 import { Button } from 'material-ui'
 import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
-import { Link } from 'react-router-dom'
 import { reduxForm, formValueSelector } from 'redux-form'
 import _ from 'lodash'
 
@@ -24,7 +23,7 @@ class FormAddNew extends Component {
   }
 
   render () {
-    const { classes, formValues: { category }, change, handleSubmit } = this.props
+    const { classes, formValues: { category }, change, handleSubmit, onClickCancelBtn } = this.props
 
     return (
       <form noValidate autoComplete={'off'} onSubmit={handleSubmit(this.onFormSubmit)}>
@@ -69,9 +68,9 @@ class FormAddNew extends Component {
             onClick={handleSubmit(this.onFormSubmit)}>
             Submit
           </Button>
-          <Link to={'/'} className={classes.button}>
-            <Button raised>Cancel</Button>
-          </Link>
+          <Button className={classes.button} raised onClick={onClickCancelBtn}>
+            Cancel
+          </Button>
         </div>
       </form>
     )

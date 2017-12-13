@@ -11,7 +11,16 @@ class AuthorizedRoute extends Component {
       <Route
         {...rest}
         render={(props) =>
-          !_.isEmpty(user) ? <Component {...props} /> : <Redirect to={'/login'} />}
+          !_.isEmpty(user) ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: { from: props.location }
+              }}
+            />
+          )}
       />
     )
   }
