@@ -71,11 +71,7 @@ Login.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.common.user,
-    formValues: formValueSelector(form)(state, 'username', 'password'),
-    initialValues: {
-      username: 'testss',
-      password: 'testdssdf'
-    }
+    formValues: formValueSelector(form)(state, 'username', 'password')
   }
 }
 

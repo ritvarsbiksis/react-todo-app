@@ -21,7 +21,13 @@ class ListToDo extends Component {
   componentDidMount () {
     const { todoFetch, user: { id }, todosById } = this.props
 
+    const { isToDosData } = this.state
+
     if (_.isEmpty(todosById)) todoFetch(id)
+    else {
+      if (_.isEmpty(todosById) && isToDosData) this.setState({ isToDosData: false })
+      else if (!_.isEmpty(todosById) && !isToDosData) this.setState({ isToDosData: true })
+    }
   }
 
   componentWillReceiveProps (nextProps) {

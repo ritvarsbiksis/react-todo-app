@@ -58,7 +58,7 @@ class ItemToDo extends Component {
             <IconButton aria-label={'Delete'} onClick={() => todoDelete(id)}>
               <DeleteIcon className={isDone ? classes.listIconDone : null} />
             </IconButton>
-            <Link to={'/todo'}>
+            <Link to={`/todo/${id}`}>
               <IconButton aria-label={'View'}>
                 <ViewIcon className={isDone ? classes.listIconDone : null} />
               </IconButton>

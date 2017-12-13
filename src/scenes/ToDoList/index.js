@@ -5,6 +5,7 @@ import { Route, HashRouter } from 'react-router-dom'
 
 import styles from './styles'
 import ListToDo from './components/ListToDo'
+import ToDoView from '../ToDoView'
 
 class ToDoList extends Component {
   render () {
@@ -15,6 +16,7 @@ class ToDoList extends Component {
         <HashRouter hashType={'noslash'}>
           <div>
             <Route path={'/'} exact component={ListToDo} />
+            <Route path={'/todo/:todoID'} exact component={ToDoView} />
           </div>
         </HashRouter>
       </div>
